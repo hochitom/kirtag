@@ -1,0 +1,18 @@
+{
+  "name": "kirtag-api",
+  "version": "0.0.1",
+  "description": "api for kirtag project",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "hochitom",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "hapi": "~6.4.0",
+    "joi": "~4.6.2",
+    "lout": "~5.0.1",
+    "mongoose": "~3.8.14",
+    "hapi-mongoose-db-connector": "~1.0.4"
+  }
+}
