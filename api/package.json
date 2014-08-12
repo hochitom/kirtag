@@ -13,6 +13,7 @@
     "joi": "~4.6.2",
     "lout": "~5.0.1",
     "mongoose": "~3.8.14",
-    "hapi-mongoose-db-connector": "~1.0.4"
+    "hapi-mongoose-db-connector": "~1.0.4",
+    "good": "~2.2.1"
   }
 }
