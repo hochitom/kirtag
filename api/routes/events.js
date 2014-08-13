@@ -25,7 +25,7 @@ module.exports = function (server) {
         config: {
             handler: EventsCtr.index,
             description: 'GET all events',
-            notes: 'test note'
+            notes: 'You can filter events by adding type as query param'
         }
     }, {
         method: 'POST',
