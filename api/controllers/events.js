@@ -61,5 +61,24 @@ module.exports = {
                 reply(req.payload);
             });
         });
+    },
+    delete: function (req, reply) {
+        Events.findOne({slug: req.params.slug}).exec(function (err, event) {
+            if (err) {
+                console.error(err);
+                return reply(err);
+            }
+
+            event.status = 'deleted';
+
+            event.save(function (err) {
+                if (err) {
+                    console.error(err);
+                    return reply(err);
+                }
+
+                reply({data: 'event deleted'});
+            });
+        });
     }
 }

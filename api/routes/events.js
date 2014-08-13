@@ -43,16 +43,21 @@ module.exports = function (server) {
         path: '/events/{slug}',
         config: {
             handler: EventsCtr.detail,
-            description: 'GET event',
-            notes: 'get detail event information for given slug'
+            description: 'get detail event information for given slug'
         }
     }, {
         method: 'PUT',
         path: '/events/{slug}',
         config: {
             handler: EventsCtr.update,
-            description: 'GET event',
-            notes: 'get detail event information for given slug'
+            description: 'edit detail event information for given slug'
+        }
+    }, {
+        method: 'DELETE',
+        path: '/events/{slug}',
+        config: {
+            handler: EventsCtr.delete,
+            description: 'delete event'
         }
     }])
 };
