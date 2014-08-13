@@ -2,8 +2,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var generateSlug = require('mongoose-slugs');
-var timestamps = require('mongoose-timestamps');
+var troop = require('mongoose-troop');
 
 var Clubs = new Schema({
     slug: {
@@ -17,9 +16,7 @@ var Clubs = new Schema({
     }
 });
 
-Clubs.plugin(timestamps);
-
-Clubs
-    .pre('validate', generateSlug('Clubs', 'title', 'slug'));
+Clubs.plugin(troop.timestamp);
+Clubs.plugin(troop.slugify);
 
 module.exports = mongoose.model('Clubs', Clubs)

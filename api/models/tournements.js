@@ -2,8 +2,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var generateSlug = require('mongoose-slugs');
-var timestamps = require('mongoose-timestamps');
+var troop = require('mongoose-troop');
 
 var Tournaments = new Schema({
     slug: {
@@ -17,9 +16,7 @@ var Tournaments = new Schema({
     }
 });
 
-Tournaments.plugin(timestamps);
-
-Tournaments
-    .pre('validate', generateSlug('Tournaments', 'title', 'slug'));
+Tournaments.plugin(troop.timestamp);
+Tournaments.plugin(troop.slugify);
 
 module.exports = mongoose.model('Tournaments', Tournaments)
