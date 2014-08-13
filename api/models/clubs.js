@@ -17,6 +17,6 @@ var Clubs = new Schema({
 });
 
 Clubs.plugin(troop.timestamp);
-Clubs.plugin(troop.slugify);
+Clubs.plugin(troop.slugify, {source: 'name'});
 
 module.exports = mongoose.model('Clubs', Clubs)

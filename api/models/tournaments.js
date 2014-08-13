@@ -17,6 +17,6 @@ var Tournaments = new Schema({
 });
 
 Tournaments.plugin(troop.timestamp);
-Tournaments.plugin(troop.slugify);
+Tournaments.plugin(troop.slugify, {source: 'name'});
 
 module.exports = mongoose.model('Tournaments', Tournaments)

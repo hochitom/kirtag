@@ -17,6 +17,6 @@ var Leagues = new Schema({
 });
 
 Leagues.plugin(troop.timestamp);
-Leagues.plugin(troop.slugify);
+Leagues.plugin(troop.slugify, {source: 'name'});
 
 module.exports = mongoose.model('Leagues', Leagues)
