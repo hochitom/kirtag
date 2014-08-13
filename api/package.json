@@ -15,6 +15,6 @@
     "mongoose": "~3.8.14",
     "hapi-mongoose-db-connector": "~1.0.4",
     "good": "~2.2.1",
-    "slug": "~0.5.0"
+    "mongoose-troop": "0.0.8"
   }
 }
