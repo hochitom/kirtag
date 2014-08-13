@@ -7,7 +7,15 @@ var plugins = [
     require('good')
 ];
 
-var server = new hapi.Server(3001);
+var server = new hapi.Server(3001, {
+    views: {
+        engines: {
+            html: require('handlebars')
+        },
+        path: __dirname + '/public/templates',
+        layout: true
+    }
+});
 
 require('./routes')(server);
 
