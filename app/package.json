@@ -1,0 +1,19 @@
+{
+  "name": "kirtag-app",
+  "version": "0.0.1",
+  "description": "the kirtag frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "q": "~1.0.1",
+    "handlebars": "~2.0.0-alpha.4",
+    "hapi": "~6.4.0",
+    "joi": "~4.6.2",
+    "lout": "~5.0.1",
+    "good": "~2.2.1"
+  }
+}
