@@ -11,7 +11,7 @@ var createSchema = Joi.object({
     all_day: Joi.boolean(),
     content: Joi.string().optional(),
     image: Joi.string().optional(),
-    type: Joi.string().optional().valid('club', 'tournament', 'league'),
+    type: Joi.string().required().valid('club', 'tournament', 'league'),
     club: Joi.string().optional(),
     league: Joi.string().optional(),
     tournament: Joi.string().optional(),
