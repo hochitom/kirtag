@@ -1,7 +1,22 @@
 'use strict'
 
 var EventsCtr = require('../controllers/events');
-var t = require('joi');
+var Joi = require('joi');
+
+var createSchema = Joi.object({
+    status: Joi.string().optional().valid('private', 'public', 'hidden', 'deleted'),
+    title: Joi.string().required(),
+    date_start: Joi.string().required(),
+    date_end: Joi.any(),
+    all_day: Joi.boolean(),
+    content: Joi.string().optional(),
+    image: Joi.string().optional(),
+    type: Joi.string().optional().valid('club', 'tournament', 'league'),
+    club: Joi.string().optional(),
+    league: Joi.string().optional(),
+    tournament: Joi.string().optional(),
+    match: Joi.string().optional()
+}).xor('club', 'league', 'tournament', 'match').options({abortEarly: false});
 
 module.exports = function (server) {
     server.route([{
@@ -17,14 +32,27 @@ module.exports = function (server) {
         path: '/events',
         config: {
             handler: EventsCtr.create,
-            /*validate: {
-                query: {
-                    title: t.string().required()
-                }
-            },*/
-            tags: ['admin', 'api'],
-            description: 'Test GET',
-            notes: 'test note'
+            validate: {
+                payload: createSchema
+            },
+            description: 'Create a new Event',
+            notes: 'Club, League, Tournement or Match are required. But only one of them is allowed.'
+        }
+    }, {
+        method: 'GET',
+        path: '/events/{slug}',
+        config: {
+            handler: EventsCtr.detail,
+            description: 'GET event',
+            notes: 'get detail event information for given slug'
+        }
+    }, {
+        method: 'PUT',
+        path: '/events/{slug}',
+        config: {
+            handler: EventsCtr.update,
+            description: 'GET event',
+            notes: 'get detail event information for given slug'
         }
     }])
 };

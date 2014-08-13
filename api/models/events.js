@@ -2,14 +2,13 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var generateSlug = require('mongoose-slugs');
-var timestamps = require('mongoose-timestamps');
+var troop = require('mongoose-troop');
 
 var Events = new Schema({
-    slug: {
-        index: true,
+    status: {
         type: String,
-        required: true
+        default: 'public',
+        enum: ['private', 'public', 'hidden', 'deleted']
     },
     date_start: {
         index: true,
@@ -36,7 +35,7 @@ var Events = new Schema({
     },
     tournament: {
         type: Schema.Types.ObjectId,
-        ref: 'Tournements'
+        ref: 'Tournaments'
     },
     league: {
         type: Schema.Types.ObjectId,
@@ -48,9 +47,7 @@ var Events = new Schema({
     }*/
 });
 
-Events.plugin(timestamps);
-
-Events
-    .pre('validate', generateSlug('Events', 'title', 'slug'));
+Events.plugin(troop.timestamp);
+Events.plugin(troop.slugify);
 
 module.exports = mongoose.model('Events', Events)
