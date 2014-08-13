@@ -9,5 +9,11 @@ module.exports = function (server) {
         config: {
             handler: EventsCtr.index
         }
+    },{
+        method: 'GET',
+        path: '/events/{slug}',
+        config: {
+            handler: EventsCtr.detail
+        }
     }])
 };
