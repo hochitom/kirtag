@@ -12,7 +12,7 @@ module.exports = {
             }
         }
 
-        Events.find(query).exec(function (err, events) {
+        Events.find(query).populate('club tournament league match').exec(function (err, events) {
             if (err) {
                 console.error(err);
                 return reply(err);
@@ -34,7 +34,7 @@ module.exports = {
         });
     },
     detail: function (req, reply) {
-        Events.findOne({slug: req.params.slug}).exec(function (err, event) {
+        Events.findOne({slug: req.params.slug}).populate('club tournament league match').exec(function (err, event) {
             if (err) {
                 console.error(err);
                 return reply(err);
