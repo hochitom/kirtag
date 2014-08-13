@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var troop = require('mongoose-troop');
+var timestamp = require('mongoose-timestamps');
+var slugify = require('mongoose-slugify');
 
 var Leagues = new Schema({
     slug: {
@@ -16,7 +17,10 @@ var Leagues = new Schema({
     }
 });
 
-Leagues.plugin(troop.timestamp);
-Leagues.plugin(troop.slugify, {source: 'name'});
+Leagues.plugin(timestamp);
+Leagues.plugin(slugify, {
+    prop: 'name',
+    index: true
+});
 
 module.exports = mongoose.model('Leagues', Leagues)

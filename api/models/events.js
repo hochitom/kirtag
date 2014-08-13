@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var troop = require('mongoose-troop');
+var timestamp = require('mongoose-timestamps');
+var slugify = require('mongoose-slugify');
 
 var Events = new Schema({
     slug: {
@@ -52,7 +53,10 @@ var Events = new Schema({
     }*/
 });
 
-Events.plugin(troop.timestamp);
-Events.plugin(troop.slugify);
+Events.plugin(timestamp);
+Events.plugin(slugify, {
+    prop: 'title',
+    index: true
+});
 
 module.exports = mongoose.model('Events', Events)

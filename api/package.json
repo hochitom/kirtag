@@ -15,6 +15,7 @@
     "mongoose": "~3.8.14",
     "hapi-mongoose-db-connector": "~1.0.4",
     "good": "~2.2.1",
-    "mongoose-troop": "0.0.8"
+    "mongoose-troop": "0.0.8",
+    "mongoose-slugify": "git+ssh://git@github.com:the-diamond-dogs-group-oss/mongoose-slugify"
   }
 }

@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var troop = require('mongoose-troop');
+var timestamp = require('mongoose-timestamps');
+var slugify = require('mongoose-slugify');
 
 var Matches = new Schema({
     slug: {
@@ -16,7 +17,10 @@ var Matches = new Schema({
     }
 });
 
-Matches.plugin(troop.timestamp);
-Matches.plugin(troop.slugify);
+Matches.plugin(timestamp);
+Matches.plugin(slugify, {
+    prop: 'title',
+    index: true
+});
 
 module.exports = mongoose.model('Matches', Matches)
