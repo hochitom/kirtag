@@ -8,7 +8,7 @@ var Tournaments = new Schema({
     slug: {
         index: true,
         type: String,
-        required: true
+        unique: true
     },
     name: {
         type: String,

@@ -5,6 +5,11 @@ var Schema = mongoose.Schema;
 var troop = require('mongoose-troop');
 
 var Events = new Schema({
+    slug: {
+        index: true,
+        type: String,
+        unique: true
+    },
     status: {
         type: String,
         default: 'public',
