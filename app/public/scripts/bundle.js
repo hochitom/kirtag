@@ -14152,26 +14152,63 @@ var q = require('q');
 
 // load hbs template
 var templates = {};
+var contentEl = {};
 
-if (templates && !templates['events-detail']) {
-    $.get('/templates/events/detail.html').success(function (tmp) {
-        templates['events-detail'] = handlebars.compile(tmp);
+var getTemplate = function (tmp) {
+    var d = q.defer();
+
+    if (!templates[tmp]) {
+        $.get('/templates/' + tmp).success(function (template) {
+            templates[tmp] = handlebars.compile(template);
+            d.resolve(templates[tmp]);
+        });
+    } else {
+        d.resolve(templates[tmp]);
+    }
+
+    return d.promise;
+};
+
+$(document).on('click', '.js-async', function (e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+    var tmp = $this.attr('data-tmp');
+
+    $.get(link + '?json=1')
+        .then(function (d) {
+            updateContent(tmp, d);
+
+            var d1 = {
+                data: d,
+                tmp: tmp
+            }
+            history.pushState(d1, d.title, link);
+        });
+});
+
+function updateContent(tmp, data) {
+    if (data == null)
+        return;
+
+    getTemplate(tmp).then(function (template) {
+        console.log('here is your template', template);
+        $('#js-view').html(template(data));
     });
 }
 
-$('.js-events-list').on('click', 'a', function (e) {
-    e.preventDefault();
-    var link = $(this).attr('href');
+window.addEventListener('popstate', function(event) {
+    console.log('popstate fired!');
+    console.log(event.state);
 
-    $.get('//127.0.0.1:3000' + link).success(function (data) {
-        console.log(data);
-        console.log(templates['events-detail']);
-        if (templates['events-detail']) {
-            $('#js-view').html(templates['events-detail']({event: data}));
-            history.pushState({}, data.title, link);
-        }
-    });
+    if (event.state.static)
+        $('#js-view').html(event.state.static);
+    else
+        updateContent(event.state.tmp, event.state.data);
 });
+
+history.replaceState({static: $('#js-view')}, document.title, document.location.href);
 
 },{"handlebars":15,"jquery":16,"q":17}],20:[function(require,module,exports){
 module.exports=require(18)

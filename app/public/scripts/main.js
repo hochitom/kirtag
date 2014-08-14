@@ -6,38 +6,54 @@ var q = require('q');
 var templates = {};
 
 var getTemplate = function (tmp) {
-    var d = q.deferred();
+    var d = q.defer();
 
-    if (!templates)
-        templates = {};
-
-    if (!templates[tmp]) {
+    if (templates[tmp]) {
+        d.resolve(templates[tmp]);
+    } else {
         $.get('/templates/' + tmp).success(function (template) {
             templates[tmp] = handlebars.compile(template);
             d.resolve(templates[tmp]);
         });
-    } else {
-        d.resolve(templates[tmp]);
     }
 
     return d.promise;
 };
 
-
-
 $(document).on('click', '.js-async', function (e) {
     e.preventDefault();
+
     var $this = $(this);
     var link = $this.attr('href');
-    var data;
+    var tmp = $this.attr('data-tmp');
 
-    $.get('//127.0.0.1:3000' + link)
-    .then(function (d) {
-        data = d;
-        return getTemplate($this.attr('data-tmp'));
-    })
-    .then(function (template) {
-        $('#js-view').html(template({event: data}));
-        history.pushState({}, data.title, link);
-    });
+    $.get(link + '?json=1')
+        .then(function (d) {
+            updateContent(tmp, d);
+
+            var d1 = {
+                data: d,
+                tmp: tmp
+            }
+            history.pushState(d1, d.title, link);
+        });
 });
+
+function updateContent(tmp, data) {
+    if (data == null)
+        return;
+
+    getTemplate(tmp).then(function (template) {
+        console.log('here is your template', template);
+        $('#js-view').html(template(data));
+    });
+}
+
+window.addEventListener('popstate', function(event) {
+    if (event.state.static)
+        $('#js-view').html(event.state.static);
+    else
+        updateContent(event.state.tmp, event.state.data);
+});
+
+history.replaceState({static: $('#js-view')}, document.title, document.location.href);
