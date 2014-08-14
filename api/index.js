@@ -13,7 +13,7 @@ var plugins = [
     require('good')
 ];
 
-var server = new hapi.Server(3000);
+var server = new hapi.Server(3000, {cors: true});
 
 require('./routes')(server);
 
