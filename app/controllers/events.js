@@ -5,7 +5,11 @@ var api = require('../lib/apiHelper');
 module.exports = {
     index: function (req, reply) {
         api.get('/events').then(function (events) {
-            reply.view('events/index.html', {events: events});
+            if (req.query.json) {
+                reply({events: events});
+            } else {
+                reply.view('events/index.html', {events: events});
+            }
         }).fail(function (err) {
             console.error('#1 get Events', err);
             reply(err);
@@ -15,7 +19,11 @@ module.exports = {
         api
             .get('/events/' + req.params.slug)
             .then(function (event) {
-                reply.view('events/detail.html', {event: event});
+                if (req.query.json) {
+                    reply({event: event});
+                } else {
+                    reply.view('events/detail.html', {event: event});
+                }
             })
             .fail(function (err) {
                 console.error('#1 get Events', err);
